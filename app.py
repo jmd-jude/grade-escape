@@ -1,8 +1,5 @@
 # app.py
 import streamlit as st
-from pages.upload import render_upload_page
-from pages.assignments import render_assignment_page
-from pages.results import render_results_page
 from config.settings import get_settings
 from services.storage import StorageService
 from services.pipeline import ProcessingPipeline
@@ -20,10 +17,6 @@ st.set_page_config(
     page_icon="📝",
     layout="wide"
 )
-
-# Initialize session state
-if 'current_page' not in st.session_state:
-    st.session_state.current_page = "Upload & Grade"
 
 # Main application layout
 if 'user' not in st.session_state:
@@ -65,22 +58,8 @@ else:
     # Main title
     st.title("Grade Escape MVP")
     
-    # Sidebar navigation
+    # Display user info in sidebar
     with st.sidebar:
-        pages = {
-            "Upload & Grade": "📝",
-            "Assignment Management": "📚",
-            "Results": "📊"
-        }
-        
-        st.session_state.current_page = st.radio(
-            "Navigation",
-            list(pages.keys()),
-            format_func=lambda x: f"{pages[x]} {x}",
-            index=list(pages.keys()).index(st.session_state.current_page)
-        )
-        
-        st.markdown("---")
         teacher_name = st.session_state.teacher.get('name', 'Teacher')
         st.caption(f"Logged in as: {teacher_name}")
         
@@ -88,10 +67,5 @@ else:
             st.session_state.clear()
             st.rerun()
     
-    # Render selected page
-    if st.session_state.current_page == "Upload & Grade":
-        render_upload_page(storage_service)
-    elif st.session_state.current_page == "Assignment Management":
-        render_assignment_page(storage_service)
-    elif st.session_state.current_page == "Results":
-        render_results_page(storage_service)
+    # Main page content
+    st.write("Welcome to Grade Escape! Use the sidebar to navigate between pages.")
