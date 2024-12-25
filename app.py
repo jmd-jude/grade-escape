@@ -1,8 +1,8 @@
 # app.py
 import streamlit as st
-from ui.pages.upload import render_upload_page
-from ui.pages.assignments import render_assignment_page
-from ui.pages.results import render_results_page
+from pages.upload import render_upload_page
+from pages.assignments import render_assignment_page
+from pages.results import render_results_page
 from config.settings import get_settings
 from services.storage import StorageService
 from services.pipeline import ProcessingPipeline

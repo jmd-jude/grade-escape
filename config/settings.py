@@ -18,12 +18,15 @@ def get_secret(key: str, default: str = "") -> str:
     try:
         # Try Streamlit secrets first
         if hasattr(st, 'secrets'):
-            return st.secrets.get(key, "")
+            value = st.secrets.get(key)
+            if value is not None:
+                return str(value)
     except:
         pass
     
     # Fall back to environment variables
-    return os.getenv(key, default)
+    value = os.getenv(key)
+    return str(value) if value is not None else default
 
 class Settings(BaseSettings):
     # API Keys and URLs
@@ -37,9 +40,20 @@ class Settings(BaseSettings):
     environment: str = get_secret("ENVIRONMENT", "development")
     
     # Processing Settings
-    max_retries: int = int(get_secret("MAX_RETRIES", "3"))
-    batch_size: int = int(get_secret("BATCH_SIZE", "10"))
-    ocr_confidence_threshold: float = float(get_secret("OCR_CONFIDENCE_THRESHOLD", "0.8"))
+    try:
+        max_retries: int = int(get_secret("MAX_RETRIES", "3"))
+    except (ValueError, TypeError):
+        max_retries: int = 3
+        
+    try:
+        batch_size: int = int(get_secret("BATCH_SIZE", "10"))
+    except (ValueError, TypeError):
+        batch_size: int = 10
+        
+    try:
+        ocr_confidence_threshold: float = float(get_secret("OCR_CONFIDENCE_THRESHOLD", "0.8"))
+    except (ValueError, TypeError):
+        ocr_confidence_threshold: float = 0.8
     
     # Storage Settings
     storage_bucket: str = get_secret("STORAGE_BUCKET", "ap-grader-images")
