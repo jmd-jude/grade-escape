@@ -63,6 +63,16 @@ with tab1:
                         key=f"points_{st.session_state.input_key_counter}"
                     )
                 
+                # Add Requirement button right after requirements input
+                if st.form_submit_button("Add Requirement", type="secondary"):
+                    if new_req:
+                        st.session_state.requirements.append({
+                            "text": new_req,
+                            "points": points
+                        })
+                        st.session_state.input_key_counter += 1
+                        st.rerun()
+                
                 # Rubric metadata section
                 st.subheader("Rubric Metadata")
                 notes = st.text_area(
@@ -86,15 +96,6 @@ with tab1:
                         if new_example:
                             st.session_state.rubric_examples.append(new_example)
                             st.rerun()
-                
-                if st.form_submit_button("Add Requirement", type="secondary"):
-                    if new_req:
-                        st.session_state.requirements.append({
-                            "text": new_req,
-                            "points": points
-                        })
-                        st.session_state.input_key_counter += 1
-                        st.rerun()
                 
                 st.write(f"Total Points: {total_points}")
                 

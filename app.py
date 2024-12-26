@@ -77,4 +77,41 @@ else:
             st.rerun()
     
     # Main page content
-    st.write("Welcome to Grade Escape! Use the sidebar to navigate between pages.")
+    st.write("# Welcome to Grade Escape! 🎓")
+    st.write("Here's how to get started:")
+
+    # Quick Start Guide using columns for better layout
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.write("### 1. 📚 Create an Assignment")
+        st.markdown("""
+        - Click "Assignment Management"
+        - Define requirements and rubric
+        - Set grading criteria
+        """)
+
+    with col2:
+        st.write("### 2. 📝 Grade Student Work")
+        st.markdown("""
+        - Use "Upload & Grade"
+        - Name files with student IDs
+        - Get instant feedback
+        """)
+
+    with col3:
+        st.write("### 3. 📊 Review Results")
+        st.markdown("""
+        - Access "Results" page
+        - Filter by assignment
+        - View detailed feedback
+        """)
+
+    # Tips section at the bottom
+    st.markdown("---")
+    st.write("### 💡 Pro Tips")
+    st.info("""
+    - Name your files like 'StudentName.jpg' for automatic student ID detection
+    - Preview the rubric before uploading submissions
+    - Check grading results immediately after processing
+    """)
