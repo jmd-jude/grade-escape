@@ -11,12 +11,21 @@ storage_service = StorageService()
 pipeline = ProcessingPipeline()
 supabase: Client = create_client(settings.supabase_url, settings.supabase_key)
 
-# Page configuration
-st.set_page_config(
-    page_title="Grade Escape MVP",
-    page_icon="📝",
-    layout="wide"
-)
+# Page configuration - sidebar collapsed by default for login
+if 'user' not in st.session_state:
+    st.set_page_config(
+        page_title="Grade Escape MVP",
+        page_icon="📝",
+        layout="wide",
+        initial_sidebar_state="collapsed"
+    )
+else:
+    st.set_page_config(
+        page_title="Grade Escape MVP",
+        page_icon="📝",
+        layout="wide",
+        initial_sidebar_state="expanded"
+    )
 
 # Main application layout
 if 'user' not in st.session_state:
